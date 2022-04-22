@@ -7,9 +7,15 @@ import Constants from "expo-constants";
 const screens = {
   StudentList: {
     screen: StudentList,
+    navigationOptions: {
+      title: "Student List",
+    },
   },
   TakeAttendance: {
     screen: TakeAttendance,
+    navigationOptions: {
+      title: "Take Attendance",
+    },
   },
 };
 

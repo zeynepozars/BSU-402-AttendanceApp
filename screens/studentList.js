@@ -44,7 +44,10 @@ export default function StudentList({ navigation }) {
 
   function Item({ chooseItem, item, index, borderWidth, borderColor }) {
     return (
-      <TouchableOpacity onPress={() => chooseItem(item.key)}>
+      <TouchableOpacity
+        style={globalStyles.listContainer}
+        onPress={() => chooseItem(item.key)}
+      >
         <Text style={globalStyles.itemText}>{item.name}</Text>
         <Image
           style={[globalStyles.item, borderWidth, borderColor]}
@@ -152,7 +155,7 @@ export default function StudentList({ navigation }) {
     const borderWidth = item.selected ? 4 : 1;
     const borderColor = item.selected ? "darkseagreen" : "black";
     return (
-      <View style={globalStyles.previewContainer}>
+      <View style={globalStyles.container}>
         <Item
           item={item}
           chooseItem={() => {
