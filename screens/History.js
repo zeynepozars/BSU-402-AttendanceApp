@@ -3,7 +3,7 @@ import { View, Text, Button } from "react-native";
 import { globalStyles } from "../styles/global";
 import Constants from "expo-constants";
 
-export default function TakeAttendance({ navigation }) {
+export default function History({ navigation }) {
   const backClickHandler = () => {
     navigation.navigate("StudentList");
   };
@@ -11,16 +11,8 @@ export default function TakeAttendance({ navigation }) {
     navigation.navigate("History");
   };
 
-  const [date, setDate] = useState(null);
 
-    useEffect(() => {
-    let today = new Date();
-    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    setDate(date);
-  }, []);
-  
-
-  const [list, setlist] = useState([]);
+    const [list, setlist] = useState([]);
 
     
 
@@ -58,15 +50,20 @@ function saveButton() {
     const response = saveList(urladdress,list)
 
 }
-//<Button title="Go back to Student List" onPress={backClickHandler} />
+
+  const [date, setDate] = useState(null);
+
+    useEffect(() => {
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    setDate(date);
+  }, []);
 
   return (
     <View>
+    <Text style={globalStyles.titleText}>Attendance History</Text>
     <Text style={globalStyles.dateText}>{date}</Text>
-      <Text>Take Attendance</Text>
       
-      <Button style={globalStyles.button} title="Attendance History" onPress={historyClickHandler} />
-      <Button title="Submit Attendence" onPress={saveButton} />
     </View>
   );
 }
