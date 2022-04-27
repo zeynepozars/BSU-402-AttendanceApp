@@ -15,7 +15,30 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import DialogInput from "react-native-dialog-input";
 import * as ImagePicker from "expo-image-picker";
 
-var studentList = [];
+var studentList = [
+  {
+          key: 1,
+          name: "Sandy Andy",
+          uri: "assets/shaggy.jpeg",
+          present: false,
+          selected: false,
+        },
+        {
+          key: 2,
+          name: "Zeynep",
+          uri: "",
+          present: false,
+          selected: false,
+        },
+        {
+          key: 3,
+          name: "Cesar Salad",
+          uri: "",
+          present: false,
+          selected: false,
+        },
+
+];
 
 export default function StudentList({ navigation }) {
   const [list, setList] = useState(studentList);
@@ -25,6 +48,14 @@ export default function StudentList({ navigation }) {
   //const [type, setType] = useState(Camera.Constants.Type.back);
   const [showMe, setShowMe] = useState(false);
   //const [showCamera, setShowCamera] = useState(false);
+  const [date, setDate] = useState(null);
+
+
+  useEffect(() => {
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    setDate(date);
+  }, []);
 
   if (cameraPermission === null) {
     return (
@@ -76,7 +107,7 @@ export default function StudentList({ navigation }) {
     } else {
       newStudent = [
         {
-          key: list[0].key + 1,
+          key: list.length + 1,
           name: studentName,
           uri: "",
           present: false,
@@ -176,7 +207,8 @@ export default function StudentList({ navigation }) {
   return (
     <SafeAreaView style={globalStyles.container}>
       <Text style={globalStyles.titleText}>Attendance App</Text>
-      <Button title="Take Attendance" onPress={clickHandler} />
+      <Text style={globalStyles.dateText}>{date}</Text>
+      
       <View style={globalStyles.tabContainer}>
         <Button
           title="Add"
@@ -208,6 +240,7 @@ export default function StudentList({ navigation }) {
             setShowMe(false);
           }}
         ></DialogInput>
+        <Button title="Take Attendance" onPress={clickHandler} />
       </View>
       <RBSheet
         ref={(ref) => {
