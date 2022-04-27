@@ -170,7 +170,7 @@ export default function StudentList({ navigation }) {
   };
 
   const clickHandler = () => {
-    navigation.navigate("TakeAttendance");
+    navigation.navigate("TakeAttendance", { list });
   };
 
   return (
