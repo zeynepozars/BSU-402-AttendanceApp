@@ -20,21 +20,21 @@ var studentList = [
           key: 1,
           name: "Sandy Andy",
           uri: "assets/shaggy.jpeg",
-          present: false,
+          present: true,
           selected: false,
         },
         {
           key: 2,
           name: "Zeynep",
           uri: "",
-          present: false,
+          present: true,
           selected: false,
         },
         {
           key: 3,
           name: "Cesar Salad",
           uri: "",
-          present: false,
+          present: true,
           selected: false,
         },
 
@@ -202,6 +202,7 @@ export default function StudentList({ navigation }) {
 
   const clickHandler = () => {
     navigation.navigate("TakeAttendance", { list });
+
   };
 
   return (
