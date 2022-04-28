@@ -167,7 +167,7 @@ export default function TakeAttendance({ navigation }) {
   async function loadList(aurl,alist) {
     const response = await fetch(aurl);  // read the remote data file via fetch 'await' blocks
     const names = await response.json(); // parse the returned json object
-    console.log(names)
+    // console.log(names)
 
      // add the returned list to the existing list
       names.forEach((item ) => {
@@ -200,19 +200,26 @@ setListHist(newList);
     console.log(allList)
     console.log(day)
       day.forEach((item) =>{
+        console.log(item)
         newList.push({
           key: newList.length + 1,
           name: item.studentName,
-          uri: "../assets/blank-profile.png",
-          present: false,
-          selected: false,
+          uri: item.uri,
+          present: item.present,
+          selected: item.selected,
           date: date
         })
     })
     allList.forEach((item) =>{
-        newList.push(item)
+      newList.push({
+        key: newList.length + 1,
+        name: item.studentName,
+        uri: item.uri,
+        present: item.present,
+        selected: item.selected,
+        date: item.date
+      })
     })
-    console.log(newList)
 
 
     const requestOptions = {
