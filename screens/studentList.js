@@ -15,46 +15,27 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import DialogInput from "react-native-dialog-input";
 import * as ImagePicker from "expo-image-picker";
 
-var studentList = [
-  {
-          key: 1,
-          name: "Sandy Andy",
-          uri: "assets/shaggy.jpeg",
-          present: false,
-          selected: false,
-        },
-        {
-          key: 2,
-          name: "Zeynep",
-          uri: "",
-          present: false,
-          selected: false,
-        },
-        {
-          key: 3,
-          name: "Cesar Salad",
-          uri: "",
-          present: false,
-          selected: false,
-        },
-
-];
-
 export default function StudentList({ navigation }) {
-  const [list, setList] = useState(studentList);
+  const [list, setList] = useState([]);
   const [cameraPermission, setCameraPermission] =
     ImagePicker.useCameraPermissions();
-  const [image, setImage] = useState("");
-  //const [type, setType] = useState(Camera.Constants.Type.back);
   const [showMe, setShowMe] = useState(false);
-  //const [showCamera, setShowCamera] = useState(false);
   const [date, setDate] = useState(null);
-
 
   useEffect(() => {
     let today = new Date();
-    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    let date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
     setDate(date);
+  }, []);
+
+  // loads the initial list
+  useEffect(() => {
+    fetchInitialData();
   }, []);
 
   if (cameraPermission === null) {
@@ -72,6 +53,38 @@ export default function StudentList({ navigation }) {
       </View>
     );
   }
+
+  async function fetchInitialData() {
+    const resp = await fetch(
+      "https://cs.boisestate.edu/~scutchin/cs402/codesnips/loadjson.php?user=atten"
+    );
+    const inData = await resp.json();
+    setList(inData);
+  }
+
+  /*
+  async function loadList(aurl, alist) {
+    const response = await fetch(aurl); // read the remote data file via fetch 'await' blocks
+    const names = await response.json(); // parse the returned json object
+
+    // add the returned list to the existing list
+    names.forEach((item) => {
+      // alist.push({ key: alist.length+1, title: item.title, selected: false })
+      alist.push({
+        key: alist.length + 1,
+        name: item.studentName,
+        uri: item.uri,
+        present: false,
+        selected: false,
+      });
+    });
+
+    const newList = alist.map((item) => {
+      return item;
+    });
+    setList(newList);
+  }
+  */
 
   function Item({ chooseItem, item, index, borderWidth, borderColor }) {
     return (
@@ -142,10 +155,6 @@ export default function StudentList({ navigation }) {
 
     console.log(imgData);
 
-    /*
-    if (!result.cancelled) {
-      setImage(result.uri);
-    */
     if (!imgData.cancelled) {
       const changedList = list.map((item) => {
         if (item.key === list[0].key) {
@@ -208,7 +217,7 @@ export default function StudentList({ navigation }) {
     <SafeAreaView style={globalStyles.container}>
       <Text style={globalStyles.titleText}>Attendance App</Text>
       <Text style={globalStyles.dateText}>{date}</Text>
-      
+
       <View style={globalStyles.tabContainer}>
         <Button
           title="Add"
