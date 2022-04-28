@@ -249,7 +249,11 @@ export default function StudentList({ navigation }) {
             setShowMe(false);
           }}
         ></DialogInput>
-        <Button title="Take Attendance" onPress={clickHandler} />
+        <Button
+          title="Take Attendance"
+          onPress={clickHandler}
+          color="#4682b4"
+        />
       </View>
       <RBSheet
         ref={(ref) => {

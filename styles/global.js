@@ -80,6 +80,14 @@ export const globalStyles = StyleSheet.create({
   },
   button: {
     position: "absolute",
-    bottom: 0,
+    bottom: 5,
+  },
+  buttonStyle: {
+    alignItems: "center",
+    justifyContent: "center",
+    opacity: 0.7,
+    borderRadius: 10,
+    elevation: 1,
+    backgroundColor: "#2e8b57",
   },
 });

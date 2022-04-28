@@ -59,12 +59,12 @@ export default function TakeAttendance({ navigation }) {
     ).then(function (res) {
       Alert.alert("Face List Created!");
     });
-    for (var i = 0; i < studentList.length; i++) {
+    for (var i = 0; i < list.length; i++) {
       var studentData = {
-        name: studentList[i].name,
-        filename: studentList[i].uri,
+        name: list[i].name,
+        filename: list[i].uri,
       };
-      console.log(studentList[i].name + " is adding");
+      console.log(list[i].name + " is adding");
 
       Requestor.upload(
         faceApiBaseUrl +
@@ -72,7 +72,7 @@ export default function TakeAttendance({ navigation }) {
           facelistId +
           "/persistedFaces",
         apiKey,
-        studentList[i].uri,
+        list[i].uri,
         {
           userData: JSON.stringify(studentData),
         }
@@ -131,6 +131,7 @@ export default function TakeAttendance({ navigation }) {
     );
   }
 
+  /*
   const takeImageForAtt = async () => {
     // Ask the user for the permission to access the camera
     const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
@@ -150,6 +151,7 @@ export default function TakeAttendance({ navigation }) {
       setImage(imgData);
     }
   };
+  */
 
   async function saveList(aurl, list) {
     // POST request using fetch with async/await
@@ -214,7 +216,11 @@ export default function TakeAttendance({ navigation }) {
   return (
     <View style={globalStyles.container}>
       <Text style={globalStyles.dateText}>{date}</Text>
-      <Button title="Create a Facelist" onPress={createFaceList} />
+      <Button
+        title="Create a Facelist"
+        onPress={createFaceList}
+        color="#4682b4"
+      />
       <Camera
         ref={(ref) => {
           this.SnapCamera = ref;
@@ -222,10 +228,13 @@ export default function TakeAttendance({ navigation }) {
         ratio={"1:1"}
         style={globalStyles.cameraContainer}
       />
-      <Button
-        title="Click to Identify a Student"
-        onPress={getStudentFromFace}
-      />
+      <View style={globalStyles.buttonStyle}>
+        <Button
+          title="Click to Identify a Student"
+          onPress={getStudentFromFace}
+          color="black"
+        />
+      </View>
       <FlatList
         data={list}
         renderItem={renderItem}
@@ -233,11 +242,11 @@ export default function TakeAttendance({ navigation }) {
         keyExtractor={(item, index) => index}
       />
       <Button
-        style={globalStyles.button}
         title="Attendance History"
         onPress={historyClickHandler}
+        color="#4682b4"
       />
-      <Button title="Submit Attendence" onPress={saveButton} />
+      <Button title="Submit Attendance" onPress={saveButton} color="#4682b4" />
     </View>
   );
 }
