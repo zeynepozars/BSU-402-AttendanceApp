@@ -119,12 +119,23 @@ export default function TakeAttendance({ navigation }) {
               }
             });
 
+            Alert.alert(userData.name + " is here!");
+            const changedList = list.map((item) => {
+              if (item.name === userData.name) {
+                item.present = true;
+              }
+              return item;
+            });
+            setList(changedList);
+
+            /*
             Alert.alert(
               "Similar to: " +
                 userData.name +
                 " with confidence of " +
                 similarFace.confidence
             );
+            */
           });
         });
       }
