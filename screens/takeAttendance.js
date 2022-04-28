@@ -203,7 +203,7 @@ setListHist(newList);
         console.log(item)
         newList.push({
           key: newList.length + 1,
-          name: item.studentName,
+          name: item.name,
           uri: item.uri,
           present: item.present,
           selected: item.selected,
@@ -213,7 +213,7 @@ setListHist(newList);
     allList.forEach((item) =>{
       newList.push({
         key: newList.length + 1,
-        name: item.studentName,
+        name: item.name,
         uri: item.uri,
         present: item.present,
         selected: item.selected,
