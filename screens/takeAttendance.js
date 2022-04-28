@@ -200,7 +200,14 @@ setListHist(newList);
     console.log(allList)
     console.log(day)
       day.forEach((item) =>{
-        newList.push(item)
+        newList.push({
+          key: newList.length + 1,
+          name: item.studentName,
+          uri: "../assets/blank-profile.png",
+          present: false,
+          selected: false,
+          date: date
+        })
     })
     allList.forEach((item) =>{
         newList.push(item)
