@@ -34,6 +34,19 @@ export const globalStyles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: "dashed",
   },
+  cameraContainer: {
+    flex: 1,
+    marginLeft: 2,
+    marginRight: 2,
+    borderWidth: 1,
+  },
+  photoContainer: {
+    flex: 1,
+    marginLeft: 2,
+    marginRight: 2,
+    borderWidth: 1,
+    borderColor: "black",
+  },
   itemText: {
     flex: 1,
     marginLeft: 5,
@@ -66,7 +79,7 @@ export const globalStyles = StyleSheet.create({
     fontSize: 20,
   },
   button: {
-  position: 'absolute',
-  bottom:0
-},
+    position: "absolute",
+    bottom: 0,
+  },
 });
