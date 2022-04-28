@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { AppRegistry, View, Text, Button, Alert } from "react-native";
 import { globalStyles } from "../styles/global";
 import {
+  AppRegistry,
   View,
   SafeAreaView,
   Text,
