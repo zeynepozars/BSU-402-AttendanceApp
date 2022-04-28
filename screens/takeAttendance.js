@@ -14,6 +14,7 @@ import {
 import Constants from "expo-constants";
 import { Camera } from "expo-camera";
 import Requestor from "../lib/Requestor";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 const apiKey = "21e04042d9d641319d10f1a42fbfcc3d";
 let facelistId = "facelist_001";
@@ -27,6 +28,7 @@ export default function TakeAttendance({ navigation }) {
   var studentList = navigation.getParam("list");
   const [image, setImage] = useState("");
   const [list, setList] = useState(studentList);
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
   const backClickHandler = () => {
     navigation.navigate("StudentList");
@@ -80,7 +82,13 @@ export default function TakeAttendance({ navigation }) {
     }
   }
 
-  function getStudentFromFace() {
+  async function getStudentFromFace() {
+    //captures the face
+    if (this.SnapCamera) {
+      let imgData = await this.SnapCamera.takePictureAsync();
+      setImage(imgData.uri);
+    }
+
     Requestor.upload(faceApiBaseUrl + "/face/v1.0/detect", apiKey, image).then(
       (facedetect_res) => {
         let faceId = facedetect_res[0].faceId;
@@ -111,7 +119,6 @@ export default function TakeAttendance({ navigation }) {
               }
             });
 
-            setImage(userData.filename);
             Alert.alert(
               "Similar to: " +
                 userData.name +
@@ -123,6 +130,26 @@ export default function TakeAttendance({ navigation }) {
       }
     );
   }
+
+  const takeImageForAtt = async () => {
+    // Ask the user for the permission to access the camera
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    if (permissionResult.granted === false) {
+      Alert.alert("No Access To Camera!");
+      return;
+    }
+    Alert.alert("Take a photo to identify student");
+    let imgData = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    console.log(imgData);
+
+    if (!imgData.cancelled) {
+      setImage(imgData);
+    }
+  };
 
   async function saveList(aurl, list) {
     // POST request using fetch with async/await
@@ -147,9 +174,10 @@ export default function TakeAttendance({ navigation }) {
         onPress={() => chooseItem(item.key)}
       >
         <Text style={globalStyles.itemText}>{item.name}</Text>
-        <Image
-          style={[globalStyles.item, borderWidth, borderColor]}
-          source={{ uri: list[index].uri }}
+        <BouncyCheckbox
+          onPress={chooseItem}
+          isChecked={item.present}
+          fillColor="#2e8b57"
         />
       </TouchableOpacity>
     );
@@ -158,13 +186,13 @@ export default function TakeAttendance({ navigation }) {
   function chooseItem(key) {
     const changedList = list.map((item) => {
       if (item.key === key) {
-        item.selected ? (item.selected = false) : (item.selected = true);
+        item.present ? (item.present = false) : (item.present = true);
       }
       return item;
     });
     setList(changedList);
   }
-  //<Button title="Go back to Student List" onPress={backClickHandler} />
+
   const renderItem = ({ item, index }) => {
     const borderWidth = item.selected ? 4 : 1;
     const borderColor = item.selected ? "darkseagreen" : "black";
@@ -184,9 +212,20 @@ export default function TakeAttendance({ navigation }) {
   };
 
   return (
-    <View>
+    <View style={globalStyles.container}>
       <Text style={globalStyles.dateText}>{date}</Text>
       <Button title="Create a Facelist" onPress={createFaceList} />
+      <Camera
+        ref={(ref) => {
+          this.SnapCamera = ref;
+        }}
+        ratio={"1:1"}
+        style={globalStyles.cameraContainer}
+      />
+      <Button
+        title="Click to Identify a Student"
+        onPress={getStudentFromFace}
+      />
       <FlatList
         data={list}
         renderItem={renderItem}

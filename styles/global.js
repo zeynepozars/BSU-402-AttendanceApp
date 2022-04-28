@@ -49,7 +49,7 @@ export const globalStyles = StyleSheet.create({
   },
   itemText: {
     flex: 1,
-    marginLeft: 5,
+    marginLeft: 7,
     marginTop: 5,
     marginRight: 5,
     textAlign: "left",
