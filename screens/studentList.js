@@ -122,7 +122,7 @@ export default function StudentList({ navigation }) {
         {
           key: list.length + 1,
           name: studentName,
-          uri: "",
+          uri: "../assets/blank-profile.png",
           present: false,
           selected: false,
         },
