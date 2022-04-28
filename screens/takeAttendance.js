@@ -252,12 +252,13 @@ export default function TakeAttendance({ navigation }) {
         numColumns={1}
         keyExtractor={(item, index) => index}
       />
+      <Button style={globalStyles.buttonStyle} title="Submit Attendance" onPress={saveButton} color="#4682b4" />
       <Button
         title="Attendance History"
         onPress={historyClickHandler}
         color="#4682b4"
       />
-      <Button title="Submit Attendance" onPress={saveButton} color="#4682b4" />
+      
     </View>
   );
 }
