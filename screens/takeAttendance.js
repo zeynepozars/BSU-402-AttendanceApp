@@ -28,6 +28,7 @@ export default function TakeAttendance({ navigation }) {
   var studentList = navigation.getParam("list");
   const [image, setImage] = useState("");
   const [list, setList] = useState(studentList);
+  const [allList, setListHist] = useState([]);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
 
   const backClickHandler = () => {
@@ -135,12 +136,97 @@ export default function TakeAttendance({ navigation }) {
     );
   }
 
+  /*
+  const takeImageForAtt = async () => {
+    // Ask the user for the permission to access the camera
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    if (permissionResult.granted === false) {
+      Alert.alert("No Access To Camera!");
+      return;
+    }
+    Alert.alert("Take a photo to identify student");
+    let imgData = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    console.log(imgData);
+
+    if (!imgData.cancelled) {
+      setImage(imgData);
+    }
+  };
+  */
+  async function loadList(aurl, alist) {
+    const response = await fetch(aurl); // read the remote data file via fetch 'await' blocks
+    const names = await response.json(); // parse the returned json object
+    // console.log(names)
+
+    // add the returned list to the existing list
+    names.forEach((item) => {
+      // alist.push({ key: alist.length+1, title: item.title, selected: false })
+      alist.push({
+        key: alist.length + 1,
+        name: item.studentName,
+        uri: item.uri,
+        present: false,
+        selected: false,
+      });
+    });
+
+    const newList = alist.map((item) => {
+      return item;
+    });
+    setListHist(newList);
+  }
+
+  // function minusButton(){
+  //   // alert('Delete Song');
+  //   const newList = [];
+  //   list.forEach((item) =>{
+  //     if(!item.selected){
+  //       newList.push(item)
+  //     }
+  //   })
+  //   setlist(newList);
+  // }
+
   async function saveList(aurl, list) {
     // POST request using fetch with async/await
+    day = list.filter((item) => item.present == true);
+    var urladdress =
+      "https://cs.boisestate.edu/~scutchin/cs402/codesnips/loadjson.php?user=atten";
+    newList = [];
+    const hist = loadList(urladdress, allList, setListHist);
+
+    console.log(allList);
+    console.log(day);
+    day.forEach((item) => {
+      console.log(item);
+      newList.push({
+        key: newList.length + 1,
+        name: item.name,
+        uri: item.uri,
+        present: item.present,
+        selected: item.selected,
+        date: date,
+      });
+    });
+    allList.forEach((item) => {
+      newList.push({
+        key: newList.length + 1,
+        name: item.name,
+        uri: item.uri,
+        present: item.present,
+        selected: item.selected,
+        date: item.date,
+      });
+    });
+
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(list),
+      body: JSON.stringify(newList),
     };
     const response = await fetch(aurl, requestOptions);
   }
@@ -228,6 +314,12 @@ export default function TakeAttendance({ navigation }) {
         title="Submit Attendance"
         onPress={saveButton}
         color="#4682b4"
+      />
+      <Button
+        style={globalStyles.buttonStyle}
+        title="Submit Attendance"
+        onPress={saveButton}
+        color="black"
       />
       <Button
         title="Attendance History"

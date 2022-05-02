@@ -62,29 +62,20 @@ export default function StudentList({ navigation }) {
     setList(inData);
   }
 
-  /*
-  async function loadList(aurl, alist) {
-    const response = await fetch(aurl); // read the remote data file via fetch 'await' blocks
-    const names = await response.json(); // parse the returned json object
+  function saveButton() {
+    var urladdress = "https://cs.boisestate.edu/~scutchin/cs402/codesnips/savejson.php?user=atten"
+    const response = saveList(urladdress,list)
 
-    // add the returned list to the existing list
-    names.forEach((item) => {
-      // alist.push({ key: alist.length+1, title: item.title, selected: false })
-      alist.push({
-        key: alist.length + 1,
-        name: item.studentName,
-        uri: item.uri,
-        present: false,
-        selected: false,
-      });
-    });
-
-    const newList = alist.map((item) => {
-      return item;
-    });
-    setList(newList);
-  }
-  */
+}
+async function saveList(aurl, list) {
+  // POST request using fetch with async/await
+  const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(list)
+  };
+  const response = await fetch(aurl, requestOptions);
+}
 
   function Item({ chooseItem, item, index, borderWidth, borderColor }) {
     return (
@@ -229,6 +220,11 @@ export default function StudentList({ navigation }) {
           onPress={() => deleteItem()}
           color="#dc143c"
         ></Button>
+        <Button
+          title="tmp save"
+          onPress={() => saveButton()}
+          color="#dc143c"
+        ></Button>
       </View>
       <View style={globalStyles.container}>
         <FlatList
@@ -253,6 +249,7 @@ export default function StudentList({ navigation }) {
           title="Take Attendance"
           onPress={clickHandler}
           color="#4682b4"
+          borderWidth = "5px"
         />
       </View>
       <RBSheet
