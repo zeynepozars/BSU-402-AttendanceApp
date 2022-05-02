@@ -56,7 +56,7 @@ export default function StudentList({ navigation }) {
 
   async function fetchInitialData() {
     const resp = await fetch(
-      "https://cs.boisestate.edu/~scutchin/cs402/codesnips/loadjson.php?user=atten"
+      "https://cs.boisestate.edu/~scutchin/cs402/codesnips/loadjson.php?user=Students"
     );
     const inData = await resp.json();
     setList(inData);
