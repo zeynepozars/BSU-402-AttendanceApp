@@ -16,8 +16,8 @@ import { Camera } from "expo-camera";
 import Requestor from "../lib/Requestor";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
-const apiKey = "API KEY HERE";
-let facelistId = "facelist_001";
+const apiKey = "21e04042d9d641319d10f1a42fbfcc3d";
+let facelistId = "facelist_017";
 let facelistData = {
   name: "My student facelist",
 };
@@ -59,6 +59,7 @@ export default function TakeAttendance({ navigation }) {
     ).then(function (res) {
       Alert.alert("Face List Created!");
     });
+
     for (var i = 0; i < list.length; i++) {
       var studentData = {
         name: list[i].name,
@@ -91,12 +92,13 @@ export default function TakeAttendance({ navigation }) {
 
     Requestor.upload(faceApiBaseUrl + "/face/v1.0/detect", apiKey, image).then(
       (facedetect_res) => {
+        console.log("facedetect_res: " + JSON.stringify(facedetect_res));
         let faceId = facedetect_res[0].faceId;
 
         let data = {
           faceId: faceId,
           faceListId: facelistId,
-          maxNumOfCandidatesReturned: 1,
+          maxNumOfCandidatesReturned: 2,
         };
 
         Requestor.request(
@@ -127,42 +129,11 @@ export default function TakeAttendance({ navigation }) {
               return item;
             });
             setList(changedList);
-
-            /*
-            Alert.alert(
-              "Similar to: " +
-                userData.name +
-                " with confidence of " +
-                similarFace.confidence
-            );
-            */
           });
         });
       }
     );
   }
-
-  /*
-  const takeImageForAtt = async () => {
-    // Ask the user for the permission to access the camera
-    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-    if (permissionResult.granted === false) {
-      Alert.alert("No Access To Camera!");
-      return;
-    }
-    Alert.alert("Take a photo to identify student");
-    let imgData = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      quality: 1,
-    });
-
-    console.log(imgData);
-
-    if (!imgData.cancelled) {
-      setImage(imgData);
-    }
-  };
-  */
 
   async function saveList(aurl, list) {
     // POST request using fetch with async/await
@@ -176,7 +147,7 @@ export default function TakeAttendance({ navigation }) {
 
   function saveButton() {
     var urladdress =
-      "https://cs.boisestate.edu/~scutchin/cs402/codesnips/savejson.php?user=atten";
+      "https://cs.boisestate.edu/~scutchin/cs402/codesnips/savejson.php?user=Students";
     const response = saveList(urladdress, list);
   }
 
@@ -252,13 +223,17 @@ export default function TakeAttendance({ navigation }) {
         numColumns={1}
         keyExtractor={(item, index) => index}
       />
-      <Button style={globalStyles.buttonStyle} title="Submit Attendance" onPress={saveButton} color="#4682b4" />
+      <Button
+        style={globalStyles.buttonStyle}
+        title="Submit Attendance"
+        onPress={saveButton}
+        color="#4682b4"
+      />
       <Button
         title="Attendance History"
         onPress={historyClickHandler}
         color="#4682b4"
       />
-      
     </View>
   );
 }
