@@ -16,7 +16,7 @@ import { Camera } from "expo-camera";
 import Requestor from "../lib/Requestor";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
-const apiKey = "21e04042d9d641319d10f1a42fbfcc3d";
+const apiKey = "API KEY HERE";
 let facelistId = "facelist_017";
 let facelistData = {
   name: "My student facelist",
