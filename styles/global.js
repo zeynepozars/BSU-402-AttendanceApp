@@ -78,6 +78,16 @@ export const globalStyles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
   },
+  NameText: {
+    marginTop: 10,
+    marginBottom: 10,
+    alignItems: "center",
+    fontFamily: "Optima",
+    color: "#708090",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 20,
+  },
   button: {
     position: "absolute",
     bottom: 5,

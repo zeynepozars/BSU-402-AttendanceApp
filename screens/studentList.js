@@ -206,7 +206,6 @@ async function saveList(aurl, list) {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <Text style={globalStyles.titleText}>Attendance App</Text>
       <Text style={globalStyles.dateText}>{date}</Text>
 
       <View style={globalStyles.tabContainer}>
@@ -218,11 +217,6 @@ async function saveList(aurl, list) {
         <Button
           title="Delete"
           onPress={() => deleteItem()}
-          color="#dc143c"
-        ></Button>
-        <Button
-          title="tmp save"
-          onPress={() => saveButton()}
           color="#dc143c"
         ></Button>
       </View>

@@ -16,7 +16,7 @@ import { Camera } from "expo-camera";
 import Requestor from "../lib/Requestor";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
-const apiKey = "API KEY HERE";
+const apiKey = "21e04042d9d641319d10f1a42fbfcc3d";
 let facelistId = "facelist_017";
 let facelistData = {
   name: "My student facelist",
@@ -313,17 +313,6 @@ export default function TakeAttendance({ navigation }) {
         style={globalStyles.buttonStyle}
         title="Submit Attendance"
         onPress={saveButton}
-        color="#4682b4"
-      />
-      <Button
-        style={globalStyles.buttonStyle}
-        title="Submit Attendance"
-        onPress={saveButton}
-        color="black"
-      />
-      <Button
-        title="Attendance History"
-        onPress={historyClickHandler}
         color="#4682b4"
       />
     </View>
