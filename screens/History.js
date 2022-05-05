@@ -17,16 +17,18 @@ export default function History({ navigation }) {
 
 
   async function loadList(aurl,alist) {
-    const response = await fetch(aurl);  // read the remote data file via fetch 'await' blocks
-    const names = await response.json(); // parse the returned json object
+    const resp = await fetch(aurl);  // read the remote data file via fetch 'await' blocks
+    // const names = await response.json(); // parse the returned json object
 
-    // add the returned list to the existing list
-    names.forEach((item ) => {
-      // alist.push({ key: alist.length+1, title: item.title, selected: false })
-      alist.push({ key:alist.length+1, name: item.name, uri: item.uri, present: false, selected: false })})
+    // // add the returned list to the existing list
+    // names.forEach((item ) => {
+    //   // alist.push({ key: alist.length+1, title: item.title, selected: false })
+    //   alist.push({ key:alist.length+1, name: item.name, uri: item.uri, present: false, selected: false })})
 
-    const newList = alist.map((item) => {return item})
-    setlist(newList);
+    // const newList = alist.map((item) => {return item})
+    // setlist(newList);
+    const inData = await resp.json();
+    setlist(inData)
   }
 
   async function saveList(aurl, list) {
@@ -40,7 +42,7 @@ export default function History({ navigation }) {
   }
 
   function loadButton() {
-    var urladdress = "https://cs.boisestate.edu/~scutchin/cs402/codesnips/savejson.php?user=AllStudents"
+    var urladdress = "https://cs.boisestate.edu/~scutchin/cs402/codesnips/loadjson.php?user=Students"
     // console.log("painnnnn")
     const response = loadList(urladdress,list,setlist)
     console.log(list)

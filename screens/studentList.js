@@ -54,16 +54,25 @@ export default function StudentList({ navigation }) {
     );
   }
 
+  
   async function fetchInitialData() {
     const resp = await fetch(
-      "https://cs.boisestate.edu/~scutchin/cs402/codesnips/loadjson.php?user=Students"
+      "https://cs.boisestate.edu/~scutchin/cs402/codesnips/loadjson.php?user=AllStudents"
     );
     const inData = await resp.json();
-    setList(inData);
+    setList(inData)
+  //   console.log("inData:")
+  //   console.log(inData)
+  //   newList = []
+  //   inData.forEach((item ) => {
+  //     newList.concat({ key: list.length+1, name: item.name, uri: item.uri, present: false, selected: false })
+  //  })
+  //  console.log(newList)
+  //   setList(newList);
   }
 
   function saveButton() {
-    var urladdress = "https://cs.boisestate.edu/~scutchin/cs402/codesnips/savejson.php?user=atten"
+    var urladdress = "https://cs.boisestate.edu/~scutchin/cs402/codesnips/savejson.php?user=AllStudents"
     const response = saveList(urladdress,list)
 
 }
@@ -97,8 +106,10 @@ async function saveList(aurl, list) {
       if (item.key === key) {
         item.selected ? (item.selected = false) : (item.selected = true);
       }
+      console.log(item)
       return item;
     });
+    
     setList(changedList);
   }
 
@@ -217,6 +228,12 @@ async function saveList(aurl, list) {
         <Button
           title="Delete"
           onPress={() => deleteItem()}
+          color="#dc143c"
+        ></Button>
+
+<Button
+          title="Save All Students"
+          onPress={() => saveButton()}
           color="#dc143c"
         ></Button>
       </View>
