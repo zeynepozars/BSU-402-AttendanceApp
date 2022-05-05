@@ -229,6 +229,12 @@ export default function TakeAttendance({ navigation }) {
       body: JSON.stringify(newList),
     };
     const response = await fetch(aurl, requestOptions);
+    const requestOptions2 = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(allList),
+    };
+    const response2 = await fetch("https://cs.boisestate.edu/~scutchin/cs402/codesnips/savejson.php?user=AllStudents", requestOptions2);
   }
 
   function saveButton() {

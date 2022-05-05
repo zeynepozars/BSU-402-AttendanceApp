@@ -40,7 +40,7 @@ export default function History({ navigation }) {
   }
 
   function loadButton() {
-    var urladdress = "https://cs.boisestate.edu/~scutchin/cs402/codesnips/loadjson.php?user=atten"
+    var urladdress = "https://cs.boisestate.edu/~scutchin/cs402/codesnips/savejson.php?user=AllStudents"
     // console.log("painnnnn")
     const response = loadList(urladdress,list,setlist)
     console.log(list)

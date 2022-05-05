@@ -106,7 +106,7 @@ async function saveList(aurl, list) {
     var newStudent = [];
     if (list.length === 0) {
       newStudent = [
-        { key: 1, name: studentName, uri: "", present: false, selected: false },
+        { key: list.length+1, name: studentName, uri: "", present: false, selected: false },
       ];
     } else {
       newStudent = [
